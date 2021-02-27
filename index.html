@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Datopian Coding chalenge</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  </head>
+  <body>
+    <h1 style="text-align: center;">Henry Hub Natural Gas Spot Price 1997-2021</h1>
+    <canvas id="Daily" width="800" height="200"></canvas>
+    <canvas id="Monthly" width="800" height="200"></canvas>
+
+
+    <script>
+      // Data from: https://www.eia.gov/dnav/ng/hist/rngwhhdD.htm
+      window.addEventListener('load', setup('daily_prices.csv','Daily','bar'));
+      window.addEventListener('load', setup('monthly_prices.csv','Monthly','line'));
+
+
+      async function setup(file,id,type) {
+        const ctx = document.getElementById(id).getContext('2d');
+        const globalTemps = await getData(file);
+        
+        const myChart = new Chart(ctx, {
+      
+          type: type,
+          data: {
+            labels: globalTemps.dates,
+            datasets: [
+              {
+                label: 'Dollars per Million Btu-'.concat(id),
+                data: globalTemps.prices,
+                fill: false,
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+               scales: {
+               xAxes: [{
+               ticks: {
+                callback: function(tick, index, array) {
+                    return (index % 10) ? "" : tick;
+                }
+            }
+        }]
+    }
+}
+        });
+      }
+
+
+      async function getData(file) {
+        const response = await fetch(file);
+        const data = await response.text();
+        const dates = [];
+        const prices = [];
+        const rows = data.split('\n').slice(1);
+        rows.forEach(row => {
+          const cols = row.split(',');
+          dates.push(cols[0]);
+          prices.push(parseFloat(cols[1]));
+        });
+        return { dates, prices };
+      }
+    </script>
+  </body>
+</html>

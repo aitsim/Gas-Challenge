@@ -7,8 +7,6 @@ verify_ssl = true
 
 [packages]
 
-requests = "2.25.1"
-pandas = "1.2.2"
 xlrd = "2.0.1"
 
 
