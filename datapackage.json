@@ -1,0 +1,54 @@
+{
+  "profile": "tabular-data-package",
+  "resources": [
+    {
+      "name": "daily-prices",
+      "path": "daily_prices.csv",
+      "profile": "tabular-data-resource",
+      "schema": {
+        "fields": [
+          {
+            "name": "date",
+            "type": "date",
+            "format": "default",
+            "title": "Date"
+          },
+          {
+            "name": "price",
+            "type": "integer",
+            "format": "default",
+            "title": "price"
+          }
+        ]
+      },
+      "format": "CSV",
+      "title": "Daily prices"
+    },
+    {
+      "name": "monthly-prices",
+      "path": "monthly_prices.csv",
+      "profile": "tabular-data-resource",
+      "schema": {
+        "fields": [
+          {
+            "name": "month",
+            "type": "date",
+            "format": "default",
+            "title": "date"
+          },
+          {
+            "name": "price",
+            "type": "integer",
+            "format": "default",
+            "title": "price"
+          }
+        ]
+      },
+      "format": "CSV"
+    }
+  ],
+  "name": "my-data-chalenge",
+  "title": "Datopian Gas challenge",
+  "description": "Henry Hub Natural Gas Prices between  1997-2021",
+  "homepage": "https://github.com/aitsim/Gas-Challenge"
+}
